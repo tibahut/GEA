@@ -1469,7 +1469,7 @@ if (not GEA) then
             GEA.log("sendActions", entry, "!ACTION! : StopTask " .. paramsIterator[2], true)
 
           elseif (lowerValue == "wakeup" and #paramsIterator > 1) then
-            fibaro:wakeUpDeadDevice(paramsIterator[2])
+            fibaro:call(1, 'wakeUpAllDevices', (paramsIterator[2]))
             GEA.log("sendActions", entry, "!ACTION! : WakeUp " .. paramsIterator[2], true)
 
           elseif (lowerValue == "virtualdevice" and #paramsIterator > 2) then
