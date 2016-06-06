@@ -23,7 +23,7 @@
 -- Version : 5.40
 -- Special Thanks to :
 -- jompa68, Fredric, Diuck, Domodial, moicphil, lolomail, byackee,
--- JossAlf, Did,  sebcbien, chris6783 and all other guy from Domotique-fibaro.fr
+-- JossAlf, Did,  sebcbien, chris6783, tibahut and all other guy from Domotique-fibaro.fr
 -- ------------------------------------------------------------
 -- Historique / History
 -- ------------------------------------------------------------
@@ -275,7 +275,8 @@ if (not GEA) then
         GEA.insert(entry)
         GEA.log("Add Global", entry, GEA.translate[GEA.language]["ADDED_DIRECT"], true, "grey")
       end
-    elseif (GEA.source["type"] == "property" and tonumber(entry[GEA.keys["SECONDES"]]) < 0) then
+    -- dirty fix fox beta 4.081 GEA.source["type"] == "event"
+    elseif ((GEA.source["type"] == "property" or GEA.source["type"] == "event") and tonumber(entry[GEA.keys["SECONDES"]]) < 0) then
       local id = 0
 
       if (type(entry[GEA.keys["ID"]]) == "number") then
@@ -289,8 +290,8 @@ if (not GEA) then
           end
         end
       end
-
-      if (tonumber(id) == tonumber(GEA.source["deviceID"])) then
+      -- dirty fox for beta 4.081 GEA.source["type"] == "event"
+      if ((GEA.source["type"] == "property" and tonumber(id) == tonumber(GEA.source["deviceID"])) or (GEA.source["type"] == "event" and tonumber(id) == tonumber(GEA.source.event.data.id))) then
         GEA.insert(entry)
         GEA.log("Add Property", entry, GEA.translate[GEA.language]["ADDED_DIRECT"], true, "grey")
       end
@@ -1468,7 +1469,7 @@ if (not GEA) then
             GEA.log("sendActions", entry, "!ACTION! : StopTask " .. paramsIterator[2], true)
 
           elseif (lowerValue == "wakeup" and #paramsIterator > 1) then
-            fibaro:call(1, 'wakeUpAllDevices', (paramsIterator[2]))
+            fibaro:wakeUpDeadDevice(paramsIterator[2])
             GEA.log("sendActions", entry, "!ACTION! : WakeUp " .. paramsIterator[2], true)
 
           elseif (lowerValue == "virtualdevice" and #paramsIterator > 2) then
