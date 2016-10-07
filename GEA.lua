@@ -5,7 +5,7 @@
 --]]
 
 
--- v 5.40
+-- v 5.42
 -- ==================================================
 -- GEA : Gestionnaire d'Evénements Automatique
 -- ==================================================
@@ -20,7 +20,7 @@
 -- it requires some knowledge
 --
 -- Auteur : Steven P. with modifications of Hansolo and Shyrka973
--- Version : 5.40
+-- Version : 5.42
 -- Special Thanks to :
 -- jompa68, Fredric, Diuck, Domodial, moicphil, lolomail, byackee,
 -- JossAlf, Did,  sebcbien, chris6783, tibahut and all other guy from Domotique-fibaro.fr
@@ -69,7 +69,7 @@ end
 -- ==================================================
 if (not GEA) then
   GEA = {}
-  GEA.version                = "5.40"
+  GEA.version                = "5.42"
   GEA.language               = "FR";
   GEA.checkEvery             = 30
   GEA.index                  = 0
